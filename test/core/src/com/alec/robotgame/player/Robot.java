@@ -20,7 +20,7 @@ public class Robot extends Sprite {
     protected float x;
     protected float y;
 
-
+// just a test
     public Robot(Behavior behavior, PhysicsComponent physics) {
         x=1.5f;
         y=1.5f;
