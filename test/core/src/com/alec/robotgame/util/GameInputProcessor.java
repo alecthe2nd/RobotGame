@@ -38,25 +38,14 @@ public class GameInputProcessor extends InputAdapter implements InputProcessor{
 
     @Override
     public boolean keyDown(int keycode) {
-        if (heldKeys.containsKey(keycode)) {
-            heldKeys.replace( keycode ,true);
-        } else {
             heldKeys.put( keycode ,true);
-        }
-        if (pressedKeys.containsKey(keycode)) {
-            pressedKeys.replace( keycode ,true);
-        } else {
             pressedKeys.put( keycode ,true);
-        }
         return false;
     }
     @Override
     public boolean keyUp(int keycode) {
-        if (heldKeys.containsKey(keycode)) {
-            heldKeys.replace( keycode ,false);
-        } else {
             heldKeys.put( keycode ,false);
-        }
+
         return false;
     }
 

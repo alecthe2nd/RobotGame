@@ -20,16 +20,15 @@ public class PlayerBehavior implements Behavior {
     public void moveTowards( Sprite s, float x, float y) {
         Vector2 steeringdir = new Vector2(x,y).sub(s.getX(),s.getY()).nor();
         Vector2 force = steeringdir.scl(0.1f);
-        s.physics.addForce(force);
+        s.physics.addImpulse(force);
     }
 
     @Override
     public void turnTowards(Sprite s, float x, float y) {
         Vector2 heading = s.getHeading();
-        Vector2 dir = new Vector2(x,y).sub(heading.x,heading.y).nor();
-        System.out.println("x="+x+"/y="+y+"/dir="+dir);
-        Vector2 rforce = dir;
-        s.physics.addRotForce(rforce);
+
+        Vector2 rforce = new Vector2(x,y).sub(heading.x,heading.y);
+        s.physics.addRotImpulse(rforce);
     }
 
     @Override
@@ -65,8 +64,11 @@ public class PlayerBehavior implements Behavior {
         if (input.isKeyPressed((Keys.E))) {
             game.openMenu(new InventoryMenu());
         }
-        Vector2 dir = physics.getMotionHeading();
-        turnTowards(s,dir.x,dir.y);
+        Vector2 dir = physics.getImpulseHeading();
+        //Vector2 dir = physics.getMotionHeading();
+        if (!dir.isZero()) {
+            turnTowards(s, dir.x, dir.y);
+        }
         System.out.println(dir.x+"/"+dir.y);
     }
 }

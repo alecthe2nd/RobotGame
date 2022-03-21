@@ -10,6 +10,8 @@ import com.alec.robotgame.player.Robot;
 import com.alec.robotgame.util.InputProcessor;
 import com.alec.robotgame.util.Sprite;
 import com.alec.robotgame.world.Landscape;
+import com.alec.robotgame.world.weather.Weather;
+import com.alec.robotgame.world.weather.Wind;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,6 +25,7 @@ public class RobotGame extends ApplicationAdapter {
 	Texture img;
 	Landscape terrain;
 	Robot bot;
+	Weather wind;
 	Array<Sprite> renderedSprites;
 	Array<Sprite> loadedSprites;
 	Array<Menu> menus;
@@ -41,6 +44,7 @@ public class RobotGame extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg");
 		terrain = new Landscape();
 		bot = new Robot( new PlayerBehavior(), new PlayerPhysics());
+		wind = new Wind();
 		addSprite(bot);
 		//Menu inv = new InventoryMenu();
 		//openMenu(inv);
@@ -59,6 +63,7 @@ public class RobotGame extends ApplicationAdapter {
 			menu.render(batch);
 		}
 		batch.end();
+		wind.update(this);
 		for (Menu menu : menus) {
 			menu.update(this);
 		}
@@ -114,6 +119,10 @@ public class RobotGame extends ApplicationAdapter {
 
 		return input;
 
+	}
+
+	public Array<Sprite> getSprites() {
+		return loadedSprites;
 	}
 
 	public InputProcessor getSpriteInput() {

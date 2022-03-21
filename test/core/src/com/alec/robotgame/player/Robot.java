@@ -20,14 +20,14 @@ public class Robot extends Sprite {
     protected float x;
     protected float y;
 
-// just a test
+
     public Robot(Behavior behavior, PhysicsComponent physics) {
         x=1.5f;
         y=1.5f;
         mass = 1;
         heading = new Vector2();
-        bounds.x = x-(WIDTH/2);
-        bounds.y = y-(HEIGHT/2);
+        bounds.x = x-(WIDTH/2f);
+        bounds.y = y-(HEIGHT/2f);
         bounds.width = WIDTH;
         bounds.height = HEIGHT;
         this.behavior = behavior;
