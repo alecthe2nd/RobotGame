@@ -1,4 +1,5 @@
 package com.alec.robotgame.world;
+import com.alec.robotgame.util.FontSpriteBatch;
 import com.alec.robotgame.util.Sprite;
 import com.alec.robotgame.world.Tiles.Tile;
 import com.alec.robotgame.world.Tiles.util.Map;
@@ -25,7 +26,7 @@ public class Landscape{
 
 
 
-    public void render(Batch b) {
+    public void render(FontSpriteBatch b) {
         tiles.render(b);
     }
 

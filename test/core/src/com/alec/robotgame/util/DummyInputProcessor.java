@@ -18,6 +18,36 @@ public class DummyInputProcessor extends InputAdapter implements InputProcessor 
     }
 
     @Override
+    public boolean isKeybindHeld(String keybind) {
+        return false;
+    }
+
+    @Override
+    public boolean isKeybindPressed(String keybind) {
+        return false;
+    }
+
+    @Override
+    public boolean areAnyKeybindsHeld(String[] keys) {
+        return false;
+    }
+
+    @Override
+    public boolean areAnyKeybindsNotHeld(String[] keys) {
+        return false;
+    }
+
+    @Override
+    public boolean areAnyKeybindsPressed(String[] keys) {
+        return false;
+    }
+
+    @Override
+    public boolean areAnyKeybindsNotPressed(String[] keys) {
+        return false;
+    }
+
+    @Override
     public void update() {
 
     }

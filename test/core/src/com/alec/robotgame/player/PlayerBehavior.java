@@ -1,25 +1,29 @@
 package com.alec.robotgame.player;
 
 import com.alec.robotgame.RobotGame;
-import com.alec.robotgame.menus.InventoryMenu;
+import com.alec.robotgame.player.BehaviorStates.Idle;
+import com.alec.robotgame.player.BehaviorStates.util.PlayerBehaviorState;
+import com.alec.robotgame.player.BehaviorStates.util.PlayerBehaviorStateMachine;
 import com.alec.robotgame.util.Behavior;
 import com.alec.robotgame.util.InputProcessor;
 import com.alec.robotgame.util.PhysicsComponent;
 import com.alec.robotgame.util.Sprite;
+import com.alec.robotgame.world.Landscape;
+import com.alec.robotgame.world.Tiles.Tile;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 
-public class PlayerBehavior implements Behavior {
-    public Vector2 Heading;
+public class PlayerBehavior extends PlayerBehaviorStateMachine<PlayerBehaviorState> implements Behavior {
 
     public PlayerBehavior () {
-        Heading = new Vector2(0,0);
+        current_state = new Idle();
+        previous_state = new Idle();
     }
 
     @Override
     public void moveTowards( Sprite s, float x, float y) {
         Vector2 steeringdir = new Vector2(x,y).sub(s.getX(),s.getY()).nor();
-        Vector2 force = steeringdir.scl(0.1f);
+        Vector2 force = steeringdir.scl(s.horsepower);
         s.physics.addImpulse(force);
     }
 
@@ -37,38 +41,22 @@ public class PlayerBehavior implements Behavior {
         PhysicsComponent physics = s.physics;
         float x = s.getX();
         float y = s.getY();
-        if (input.isKeyHeld(Keys.W)) {
+        Landscape terrain = game.getTerrain();
+        Tile tileBelow = terrain.getTile(x,y);
+        tileBelow.highlight();
 
-            moveTowards(s, x, y + 1);
-            System.out.println("W");
-        }
-        if (input.isKeyHeld(Keys.S)) {
-
-            moveTowards(s, x, y - 1);
-            System.out.println("S");
-        }
-        if (input.isKeyHeld(Keys.A)) {
-
-            moveTowards(s, x - 1, y);
-            System.out.println("A");
-        }
-        if (input.isKeyHeld(Keys.D)) {
-
-            moveTowards(s, x + 1, y);
-            System.out.println("D");
-        }
         if (input.isKeyPressed(Keys.Q)) {
             System.out.println("Q");
         }
-
-        if (input.isKeyPressed((Keys.E))) {
-            game.openMenu(new InventoryMenu());
-        }
+        current_state.execute(game,s);
         Vector2 dir = physics.getImpulseHeading();
-        //Vector2 dir = physics.getMotionHeading();
         if (!dir.isZero()) {
             turnTowards(s, dir.x, dir.y);
         }
-        System.out.println(dir.x+"/"+dir.y);
+    }
+
+    @Override
+    public void update(RobotGame game) {
+
     }
 }

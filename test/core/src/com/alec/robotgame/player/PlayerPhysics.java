@@ -75,7 +75,7 @@ public class PlayerPhysics implements PhysicsComponent {
         for (Vector2 rimpulse : rimpulses) {
             totalrotForce.add(rimpulse);
         }
-        System.out.println("Force = x"+totalForce.x+",y"+totalForce.y+"|Friction = x"+friction.x+",y"+friction.y);
+        //System.out.println("Force = x"+totalForce.x+",y"+totalForce.y+"|Friction = x"+friction.x+",y"+friction.y);
 
         Vector2 acceleration = totalForce.cpy().scl((1 / s.mass));
         Vector2 iacceleration = totalImpulse.cpy().scl((1 / s.mass));

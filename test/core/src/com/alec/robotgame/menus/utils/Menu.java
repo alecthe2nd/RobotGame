@@ -1,9 +1,9 @@
 package com.alec.robotgame.menus.utils;
 
 import com.alec.robotgame.RobotGame;
-import com.badlogic.gdx.graphics.g2d.Batch;
+import com.alec.robotgame.util.FontSpriteBatch;
 
 public interface Menu {
-    public void render(Batch b);
-    public void update(RobotGame g);
+    void render(FontSpriteBatch b);
+    void update(RobotGame g);
 }

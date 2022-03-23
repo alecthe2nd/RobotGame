@@ -1,5 +1,6 @@
 package com.alec.robotgame.world.Tiles.util;
 
+import com.alec.robotgame.util.FontSpriteBatch;
 import com.alec.robotgame.world.Tiles.EmptyTile;
 import com.alec.robotgame.world.Tiles.Tile;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -47,7 +48,7 @@ public class Map{
         }
     }
 
-    public void render(Batch b){
+    public void render(FontSpriteBatch b){
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
                 getTile(x,y).render(b);

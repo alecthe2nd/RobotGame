@@ -1,27 +1,27 @@
 package com.alec.robotgame;
 
+import com.alec.robotgame.items.Item;
 import com.alec.robotgame.menus.InventoryMenu;
 import com.alec.robotgame.menus.utils.Menu;
-import com.alec.robotgame.util.DummyInputProcessor;
-import com.alec.robotgame.util.GameInputProcessor;
+import com.alec.robotgame.util.*;
 import com.alec.robotgame.player.PlayerBehavior;
 import com.alec.robotgame.player.PlayerPhysics;
 import com.alec.robotgame.player.Robot;
-import com.alec.robotgame.util.InputProcessor;
-import com.alec.robotgame.util.Sprite;
 import com.alec.robotgame.world.Landscape;
 import com.alec.robotgame.world.weather.Weather;
 import com.alec.robotgame.world.weather.Wind;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class RobotGame extends ApplicationAdapter {
 	GameInputProcessor input;
-	SpriteBatch batch;
+	FontSpriteBatch batch;
+	BitmapFont font;
 	Texture img;
 	Landscape terrain;
 	Robot bot;
@@ -37,7 +37,8 @@ public class RobotGame extends ApplicationAdapter {
 	public void create () {
 		doSpriteInput = true;
 		input = new GameInputProcessor();
-		batch = new SpriteBatch();
+		batch = new FontSpriteBatch();
+		font = new BitmapFont();
 		renderedSprites = new Array<>();
 		loadedSprites = new Array<>();
 		menus = new Array<>();
@@ -46,8 +47,6 @@ public class RobotGame extends ApplicationAdapter {
 		bot = new Robot( new PlayerBehavior(), new PlayerPhysics());
 		wind = new Wind();
 		addSprite(bot);
-		//Menu inv = new InventoryMenu();
-		//openMenu(inv);
 	}
 
 	@Override
@@ -100,15 +99,12 @@ public class RobotGame extends ApplicationAdapter {
 	public void openMenu(Menu m) {
 		menus.add(m);
 		System.out.println("open");
-		lockSpriteInput();
+		//lockSpriteInput();
 	}
 
 	public void closeMenu(Menu m) {
 		menus.removeValue(m,true);
 		System.out.println("closed");
-		if (menus.isEmpty()) {
-			unlockSpriteInput();
-		}
 	}
 
 	public Landscape getTerrain() {
@@ -140,5 +136,9 @@ public class RobotGame extends ApplicationAdapter {
 
 	public void unlockSpriteInput() {
 		nextDoSpriteInput = true;
+	}
+
+	public Robot getPlayer(){
+		return bot;
 	}
 }

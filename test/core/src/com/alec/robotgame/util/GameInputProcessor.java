@@ -11,12 +11,18 @@ public class GameInputProcessor extends InputAdapter implements InputProcessor{
 
     protected HashMap<Integer,Boolean> heldKeys;
     protected HashMap<Integer,Boolean> pressedKeys;
+    protected HashMap<String,Integer> keybinds;
 
     {Gdx.input.setInputProcessor(this);}
 
     public GameInputProcessor() {
         heldKeys=new HashMap<>();
         pressedKeys=new HashMap<>();
+        keybinds=new HashMap<>();
+        keybinds.put("w", Keys.W);
+        keybinds.put("a", Keys.A);
+        keybinds.put("s", Keys.S);
+        keybinds.put("d", Keys.D);
 
     }
 
@@ -52,5 +58,51 @@ public class GameInputProcessor extends InputAdapter implements InputProcessor{
     public void update() {
         pressedKeys = new HashMap<>();
 
+    }
+
+    public boolean isKeybindPressed(String keybind){
+        return isKeyPressed(keybinds.get(keybind));
+
+    }
+
+    public boolean isKeybindHeld(String keybind){
+        return isKeyHeld(keybinds.get(keybind));
+
+    }
+
+    public boolean areAnyKeybindsPressed(String[] keys){
+        for (String keybind:keys){
+            if (!isKeyPressed(keybinds.get(keybind))){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean areAnyKeybindsHeld(String[] keys){
+        for (String keybind:keys){
+            if (!isKeyHeld(keybinds.get(keybind))){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean areAnyKeybindsNotPressed(String[] keys){
+        for (String keybind:keys){
+            if (isKeyPressed(keybinds.get(keybind))){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean areAnyKeybindsNotHeld(String[] keys){
+        for (String keybind:keys){
+            if (isKeyHeld(keybinds.get(keybind))){
+                return false;
+            }
+        }
+        return true;
     }
 }

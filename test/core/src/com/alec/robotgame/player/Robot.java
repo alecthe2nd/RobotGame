@@ -1,7 +1,10 @@
 package com.alec.robotgame.player;
 
 import com.alec.robotgame.RobotGame;
+import com.alec.robotgame.animations.RobotAnimator;
+import com.alec.robotgame.items.RobotInventory;
 import com.alec.robotgame.util.Behavior;
+import com.alec.robotgame.util.FontSpriteBatch;
 import com.alec.robotgame.util.PhysicsComponent;
 import com.alec.robotgame.util.Sprite;
 import com.alec.robotgame.world.Landscape;
@@ -21,10 +24,12 @@ public class Robot extends Sprite {
     protected float y;
 
 
+
     public Robot(Behavior behavior, PhysicsComponent physics) {
         x=1.5f;
         y=1.5f;
         mass = 1;
+        horsepower = 0.05f;
         heading = new Vector2();
         bounds.x = x-(WIDTH/2f);
         bounds.y = y-(HEIGHT/2f);
@@ -32,13 +37,12 @@ public class Robot extends Sprite {
         bounds.height = HEIGHT;
         this.behavior = behavior;
         this.physics = physics;
+        this.animator = new RobotAnimator();
+        this.inventory = new RobotInventory();
 
     }
 
     public void update(RobotGame game) {
-        Landscape terrain = game.getTerrain();
-        Tile tileBelow = terrain.getTile(x,y);
-        tileBelow.highlight();
         behavior.update(this,game);
         physics.update(this,game);
 
@@ -46,9 +50,11 @@ public class Robot extends Sprite {
     }
 
     @Override
-    public void render(Batch b) {
+    public void render(FontSpriteBatch b) {
         float rot = heading.angleDeg();
-        drawImage(b,image,x,y,bounds.width,bounds.height,rot);
+        drawImage(b,image,x,y,bounds.width,bounds.height,rot, animator.getRenderRegion());
+        animator.render(b);
+
     }
 
     @Override

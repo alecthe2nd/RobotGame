@@ -1,7 +1,13 @@
 package com.alec.robotgame.util;
 
 public interface InputProcessor {
-    public boolean isKeyHeld(int key);
-    public boolean isKeyPressed(int key);
-    public void update();
+    boolean isKeyHeld(int key);
+    boolean isKeyPressed(int key);
+    boolean isKeybindHeld(String keybind);
+    boolean isKeybindPressed(String keybind);
+    boolean areAnyKeybindsHeld(String[] keys);
+    boolean areAnyKeybindsNotHeld(String[] keys);
+    boolean areAnyKeybindsPressed(String[] keys);
+    boolean areAnyKeybindsNotPressed(String[] keys);
+    void update();
 }
